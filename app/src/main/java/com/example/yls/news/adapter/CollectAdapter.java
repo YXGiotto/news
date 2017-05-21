@@ -13,33 +13,40 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.yls.news.R;
 import com.example.yls.news.activity.BrowseActivity;
+import com.example.yls.news.listener.OnLongClickListener;
+import com.example.yls.news.model.Collect;
 import com.example.yls.news.model.NewsBean;
+
+import java.util.List;
 
 /**
  * Created by yls on 2017/5/16.
  */
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
-    private NewsBean newsBean;
+public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.ViewHolder> {
+    private OnLongClickListener onLongClickListener;
+    private List<Collect>collectList;
     private Context context;
 
 
-    public NewsAdapter(Context context, NewsBean newsBean) {
+    public CollectAdapter(Context context, List<Collect>collectList) {
         this.context = context;
-        this.newsBean = newsBean;
+        this.collectList = collectList;
     }
 
-
+public void setOnLongClickListener(OnLongClickListener onLongClickListener){
+    this.onLongClickListener=onLongClickListener;
+}
 
     @Override
-    public NewsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CollectAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_news, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(NewsAdapter.ViewHolder holder, int position) {
-        final NewsBean.ResultBean.DataBean dataBean = newsBean.getResult().getData().get(position);
+    public void onBindViewHolder(CollectAdapter.ViewHolder holder, int position) {
+        final Collect dataBean =collectList.get(position);
         Glide.with(context).load(dataBean.getThumbnail_pic_s()).into(holder.ivcoverNews);
         holder.tvtitleNews.setText(dataBean.getTitle());
         holder.tvAuthorName.setText(dataBean.getAuthor_name());
@@ -55,11 +62,19 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 context.startActivity(intent);
             }
         });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                onLongClickListener.delCollect(dataBean.getObjectId());
+                return true;
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return newsBean.getResult().getData().size();
+        return collectList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

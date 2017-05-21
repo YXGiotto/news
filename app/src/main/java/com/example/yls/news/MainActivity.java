@@ -1,56 +1,46 @@
 package com.example.yls.news;
 
-import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
+import android.support.annotation.IdRes;
+import android.support.v4.app.FragmentTransaction;
 
-import com.example.yls.news.adapter.MyFragmentPagerAdapter;
-import com.example.yls.news.fragment.GuoJiFragment;
-import com.example.yls.news.fragment.GuoNeiFragment;
-import com.example.yls.news.fragment.TouTiaoFragment;
+import com.example.yls.news.activity.BaseFragmentActivity;
+import com.example.yls.news.factory.FragmentFactory;
+import com.example.yls.news.fragment.MyFragment;
+import com.example.yls.news.fragment.VideoFragment;
+import com.example.yls.news.fragment.IndexFragment;
+import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnTabSelectListener;
+import com.roughike.bottombar.TabSelectionInterceptor;
 
-import java.util.ArrayList;
-import java.util.List;
+public class MainActivity extends BaseFragmentActivity {
 
-public class MainActivity extends FragmentActivity {
-    private ViewPager mViewPager;
-    private TabLayout mViewPagerTitle;
-    private MyFragmentPagerAdapter mMyFragmentPagerAdapter;
-    private List<Fragment> mFragmentList;
-    private List<String>titleFragmentList;
+    private BottomBar bottomBar;
+    private IndexFragment indexFragment;
+    private VideoFragment videoFragment;
+    private MyFragment myFragment;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        initView();
-        initData();
+    public int getLayoutResId() {
+        return R.layout.activity_main;
     }
 
-    private void initData() {
-        titleFragmentList=new ArrayList<String>();
-        titleFragmentList.add("头条");
-        titleFragmentList.add("国内");
-        titleFragmentList.add("国际");
-        mFragmentList = new ArrayList<Fragment>();
-        TouTiaoFragment touTiaoFragment=new TouTiaoFragment();
-        GuoNeiFragment guoNeiFragment=new GuoNeiFragment();
-        GuoJiFragment guoJiFragment=new GuoJiFragment();
-        mFragmentList.add(touTiaoFragment);
-        mFragmentList.add(guoNeiFragment);
-        mFragmentList.add(guoJiFragment);
-        mMyFragmentPagerAdapter=new MyFragmentPagerAdapter(getSupportFragmentManager(),mFragmentList,titleFragmentList);
-        mViewPagerTitle.addTab(mViewPagerTitle.newTab().setText(titleFragmentList.get(0)));
-        mViewPagerTitle.addTab(mViewPagerTitle.newTab().setText(titleFragmentList.get(1)));
-        mViewPagerTitle.addTab(mViewPagerTitle.newTab().setText(titleFragmentList.get(2)));
-        mViewPager.setAdapter(mMyFragmentPagerAdapter);
-        mViewPagerTitle.setupWithViewPager(mViewPager);
+    @Override
+    protected void init() {
+        super.init();
+        initView();
     }
+
+
 
     private void initView() {
-        mViewPager = (ViewPager) findViewById(R.id.viewPager);
-        mViewPagerTitle = (TabLayout) findViewById(R.id.title_viewPager);
+        bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelected(@IdRes int tabId) {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayout, FragmentFactory.getInstance().getFragment(tabId));
+                fragmentTransaction.commit();
+            }
+        });
     }
 }

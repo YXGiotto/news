@@ -1,5 +1,6 @@
 package com.example.yls.news.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -80,7 +81,7 @@ public class NewsBean {
             this.data = data;
         }
 
-        public static class DataBean {
+        public static class DataBean{
             private String uniquekey;
             private String title;
             private String date;

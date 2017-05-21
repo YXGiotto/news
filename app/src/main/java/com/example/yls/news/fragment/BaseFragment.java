@@ -19,12 +19,12 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root=inflater.inflate(getLayoutResId(),null);
-        init();
+        init(root);
         return root;
 
     }
     public abstract int getLayoutResId();
-    protected  void init(){
+    protected  void init(View root){
 
     }
     /*public void goTo(Class activity){
@@ -33,7 +33,7 @@ public abstract class BaseFragment extends Fragment {
         getActivity().finish();
     }*/
     public void goTo(Class activity,boolean isFinished){
-        Intent intent = new Intent(getContext(), activity);
+        Intent intent = new Intent(getActivity(), activity);
         startActivity(intent);
         if(isFinished){
             getActivity().finish();
