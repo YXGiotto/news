@@ -67,6 +67,7 @@ public  class IndexFragment extends BaseFragment {
         mViewPagerTitle.addTab(mViewPagerTitle.newTab().setText(titleFragmentList.get(0)));
         mViewPagerTitle.addTab(mViewPagerTitle.newTab().setText(titleFragmentList.get(1)));
         mViewPagerTitle.addTab(mViewPagerTitle.newTab().setText(titleFragmentList.get(2)));
+        mViewPager.setOffscreenPageLimit(3);
         mViewPager.setAdapter(mMyFragmentPagerAdapter);
         mViewPagerTitle.setupWithViewPager(mViewPager);
     }

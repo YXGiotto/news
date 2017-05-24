@@ -4,6 +4,7 @@ import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentTransaction;
 
 import com.example.yls.news.activity.BaseFragmentActivity;
+import com.example.yls.news.factory.FragmentController;
 import com.example.yls.news.factory.FragmentFactory;
 import com.example.yls.news.fragment.MyFragment;
 import com.example.yls.news.fragment.VideoFragment;
@@ -18,6 +19,7 @@ public class MainActivity extends BaseFragmentActivity {
     private IndexFragment indexFragment;
     private VideoFragment videoFragment;
     private MyFragment myFragment;
+    private FragmentController controller;
 
     @Override
     public int getLayoutResId() {
@@ -33,14 +35,35 @@ public class MainActivity extends BaseFragmentActivity {
 
 
     private void initView() {
+        controller=FragmentController.getInstance(this,R.id.frameLayout);
+        controller.showFragment(0);
         bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                switch (tabId){
+                    case R.id.tab_index:
+                        controller.showFragment(0);
+                    break;
+                    case R.id.tab_video:
+                        controller.showFragment(1);
+                        break;
+                    case R.id.tab_me:
+                        controller.showFragment(2);
+                        break;
+                }
+
+                /*FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.frameLayout, FragmentFactory.getInstance().getFragment(tabId));
-                fragmentTransaction.commit();
+                fragmentTransaction.commit();*/
             }
         });
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        FragmentController.destoryController();
     }
 }
