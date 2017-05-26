@@ -61,7 +61,7 @@ public  class IndexFragment extends BaseFragment {
         guoJiBundle.putInt("NEWSTYPE", 3);
         guoJiFragment.setArguments(guoJiBundle);
         mFragmentList.add(touTiaoFragment);
-        mFragmentList.add(guoNeiFragment);
+         mFragmentList.add(guoNeiFragment);
         mFragmentList.add(guoJiFragment);
         mMyFragmentPagerAdapter = new MyFragmentPagerAdapter(getActivity().getSupportFragmentManager(), mFragmentList, titleFragmentList);
         mViewPagerTitle.addTab(mViewPagerTitle.newTab().setText(titleFragmentList.get(0)));
@@ -76,5 +76,6 @@ public  class IndexFragment extends BaseFragment {
         mViewPager = (ViewPager)root.findViewById(R.id.viewPager);
         mViewPagerTitle = (TabLayout) root.findViewById(R.id.title_viewPager);
     }
+    
 
 }

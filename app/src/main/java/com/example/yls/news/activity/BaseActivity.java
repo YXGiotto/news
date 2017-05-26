@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.inputmethod.InputMethodManager;
 
+import butterknife.ButterKnife;
 import cn.bmob.v3.Bmob;
 
 
@@ -25,6 +26,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Bmob.initialize(this, "7c6787e1cf575fc20765bed4d8f2cc96");
         setContentView(getLayoutResId());
+        ButterKnife.bind(this);
         init();
     }
 

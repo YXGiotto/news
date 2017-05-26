@@ -13,6 +13,8 @@ import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 import com.roughike.bottombar.TabSelectionInterceptor;
 
+
+
 public class MainActivity extends BaseFragmentActivity {
 
     private BottomBar bottomBar;
@@ -65,5 +67,10 @@ public class MainActivity extends BaseFragmentActivity {
     protected void onDestroy() {
         super.onDestroy();
         FragmentController.destoryController();
+
     }
+
+
+
+
 }
