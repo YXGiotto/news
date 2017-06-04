@@ -6,11 +6,14 @@ import android.widget.TextView;
 import com.example.yls.news.R;
 import com.example.yls.news.activity.CollectActivity;
 import com.example.yls.news.activity.UploadVideoActivity;
-import com.example.yls.news.fragment.BaseFragment;
+import com.example.yls.news.activity.WeatherActivity;
 
-public class MyFragment extends BaseFragment implements View.OnClickListener{
+
+public class MyFragment extends BaseFragment implements View.OnClickListener {
+    private TextView tvWeather;
     private TextView tvCollect;
     private TextView tvUpload;
+
     @Override
     public int getLayoutResId() {
         return R.layout.fragment_my;
@@ -24,21 +27,28 @@ public class MyFragment extends BaseFragment implements View.OnClickListener{
     }
 
     private void initView(View root) {
-        tvCollect= (TextView) root.findViewById(R.id.tv_collect_my);
-        tvUpload=(TextView) root.findViewById(R.id.upload);
+        tvCollect = (TextView) root.findViewById(R.id.tv_collect_my);
+        tvUpload = (TextView) root.findViewById(R.id.upload);
+        tvWeather= (TextView) root.findViewById(R.id.tv_weather);
         tvCollect.setOnClickListener(this);
         tvUpload.setOnClickListener(this);
+        tvWeather.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-         switch (v.getId()){
-             case R.id.tv_collect_my:
-                 goTo(CollectActivity.class,false);
-             break;
-             case R.id.upload:
-                 goTo(UploadVideoActivity.class,false);
-                 break;
-         }
+        switch (v.getId()) {
+            case R.id.tv_collect_my:
+                goTo(CollectActivity.class, false);
+                break;
+            case R.id.upload:
+                goTo(UploadVideoActivity.class, false);
+                break;
+            case R.id.tv_weather:
+                goTo(WeatherActivity.class, false);
+                break;
+        }
     }
+
+
 }
